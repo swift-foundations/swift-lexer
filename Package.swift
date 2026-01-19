@@ -1,0 +1,43 @@
+// swift-tools-version: 6.2
+
+import PackageDescription
+
+let package = Package(
+    name: "swift-lexer",
+    platforms: [
+        .macOS(.v26),
+        .iOS(.v26),
+        .tvOS(.v26),
+        .watchOS(.v26),
+        .visionOS(.v26)
+    ],
+    products: [
+        .library(
+            name: "Lexer",
+            targets: ["Lexer"]
+        )
+    ],
+    dependencies: [
+        .package(path: "../swift-primitives/swift-lexer-primitives"),
+        .package(path: "../swift-primitives/swift-diagnostic-primitives")
+    ],
+    targets: [
+        .target(
+            name: "Lexer",
+            dependencies: [
+                .product(name: "Lexer Primitives", package: "swift-lexer-primitives"),
+                .product(name: "Diagnostic Primitives", package: "swift-diagnostic-primitives")
+            ]
+        )
+    ],
+    swiftLanguageModes: [.v6]
+)
+
+for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+    let settings: [SwiftSetting] = [
+        .enableUpcomingFeature("ExistentialAny"),
+        .enableUpcomingFeature("InternalImportsByDefault"),
+        .enableUpcomingFeature("MemberImportVisibility")
+    ]
+    target.swiftSettings = (target.swiftSettings ?? []) + settings
+}
