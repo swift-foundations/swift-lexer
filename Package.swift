@@ -28,7 +28,13 @@ let package = Package(
                 .product(name: "Lexer Primitives", package: "swift-lexer-primitives"),
                 .product(name: "Diagnostic Primitives", package: "swift-diagnostic-primitives")
             ]
-        )
+        ),
+        .testTarget(
+            name: "Lexer Tests",
+            dependencies: [
+                "Lexer",
+            ]
+        ),
     ],
     swiftLanguageModes: [.v6]
 )
@@ -39,6 +45,7 @@ for target in package.targets where ![.system, .binary, .plugin, .macro].contain
         .enableUpcomingFeature("ExistentialAny"),
         .enableUpcomingFeature("InternalImportsByDefault"),
         .enableUpcomingFeature("MemberImportVisibility"),
+        .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
         .enableExperimentalFeature("Lifetimes"),
         .enableExperimentalFeature("SuppressedAssociatedTypes"),
         .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
