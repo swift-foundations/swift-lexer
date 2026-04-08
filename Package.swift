@@ -18,8 +18,8 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../swift-primitives/swift-lexer-primitives"),
-        .package(path: "../swift-primitives/swift-diagnostic-primitives")
+        .package(path: "../../swift-primitives/swift-lexer-primitives"),
+        .package(path: "../../swift-primitives/swift-diagnostic-primitives")
     ],
     targets: [
         .target(
