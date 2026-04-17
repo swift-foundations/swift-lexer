@@ -1,12 +1,12 @@
 # Audit: swift-lexer
 
-## Code Surface — 2026-04-08
+## Code Surface — 2026-04-16
 
 ### Scope
 
 - **Target**: swift-lexer (foundation layer)
 - **Skill**: code-surface — [API-NAME-001], [API-NAME-002], [API-ERR-001], [API-IMPL-005], [API-IMPL-006], [API-IMPL-007], [API-IMPL-008]
-- **Files**: 3 source files
+- **Files**: 3 source files (Lexer.Tokenized, Lexer+Tokenize, exports)
 
 ### Findings
 
@@ -20,7 +20,7 @@
 
 ---
 
-## Implementation — 2026-04-08
+## Implementation — 2026-04-16
 
 ### Scope
 
@@ -36,4 +36,4 @@
 
 ### Summary
 
-0 findings. `Lexer.tokenize` reads as intent: create scanner, drain to arrays, return result. Uses ecosystem types (`Lexer.Scanner`, `Lexer.Lexeme`, `Lexer.Error`) throughout per [IMPL-060]. `Lexer.Tokenized` is Copyable — justified: stored in stdlib collections, value-semantic, Sendable result type per [IMPL-064] exemption.
+0 findings. `Lexer.tokenize(_ source: Span<UInt8>) -> Lexer.Tokenized` reads as intent: create scanner, drain to arrays, return result. Uses ecosystem types (`Lexer.Scanner`, `Lexer.Lexeme`, `Lexer.Error`) throughout per [IMPL-060]. `Lexer.Tokenized` is Copyable — justified per [IMPL-064] exemption: stored in stdlib collections, value-semantic, Sendable result type.
