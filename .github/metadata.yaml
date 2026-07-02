@@ -1,6 +1,6 @@
 # .github/metadata.yaml
 # Triaged by AI-assisted bulk pass (2026-04-29).
-description: "Lexer for Swift."
+description: "Batch tokenization of UTF-8 source bytes into trivia-preserving lexemes with non-throwing diagnostics for Swift."
 topics:
   - foundations
   - lexer
