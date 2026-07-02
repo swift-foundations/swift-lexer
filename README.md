@@ -105,7 +105,7 @@ Lexer.Error
 ## Community
 
 <!-- BEGIN: discussion -->
-*Discussion thread will be created at first public flip.*
+*Discussion thread will be created at the first public release.*
 <!-- END: discussion -->
 
 ---
