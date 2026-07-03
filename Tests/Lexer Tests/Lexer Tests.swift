@@ -18,11 +18,11 @@ struct LexerTokenizeTests {
     // MARK: - Helpers
 
     private func tokenize(_ string: String) -> Lexer.Tokenized {
-        var string = string
-        return string.withUTF8 { utf8 in
+        let bytes: [Byte] = Array(string.utf8).map(Byte.init)
+        return bytes.withUnsafeBufferPointer { buffer in
             let span = unsafe Span(
-                _unsafeStart: utf8.baseAddress!,
-                count: utf8.count
+                _unsafeStart: buffer.baseAddress!,
+                count: buffer.count
             )
             return Lexer.tokenize(span)
         }

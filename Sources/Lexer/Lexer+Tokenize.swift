@@ -18,7 +18,7 @@ extension Lexer {
     /// materialized lexeme sequence with any diagnostics.
     ///
     /// ```swift
-    /// let source: [UInt8] = Array("let x = 42".utf8)
+    /// let source: [Byte] = Array("let x = 42".utf8).map(Byte.init)
     /// let result = source.withUnsafeBufferPointer { buffer in
     ///     Lexer.tokenize(Span(buffer))
     /// }
@@ -29,7 +29,7 @@ extension Lexer {
     /// - Returns: The tokenized result containing lexemes and diagnostics.
     @inlinable
     public static func tokenize(
-        _ source: Span<UInt8>
+        _ source: Span<Byte>
     ) -> Lexer.Tokenized {
         var scanner = Lexer.Scanner(source)
         var lexemes: [Lexer.Lexeme] = []
