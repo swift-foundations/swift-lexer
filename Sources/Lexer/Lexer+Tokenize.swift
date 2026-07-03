@@ -31,7 +31,7 @@ extension Lexer {
     public static func tokenize(
         _ source: Span<Byte>
     ) -> Lexer.Tokenized {
-        var scanner = Lexer.Scanner(source)
+        var scanner = Self.Scanner(source)
         var lexemes: [Lexer.Lexeme] = []
         var diagnostics: [Lexer.Error] = []
 
@@ -39,7 +39,7 @@ extension Lexer {
             lexemes.append(lexeme)
         }
 
-        return Lexer.Tokenized(
+        return Self.Tokenized(
             lexemes: lexemes,
             diagnostics: diagnostics
         )

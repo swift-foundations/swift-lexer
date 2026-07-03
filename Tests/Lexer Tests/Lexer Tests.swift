@@ -9,8 +9,8 @@
 //
 // ===----------------------------------------------------------------------===//
 
-import Testing
 import Lexer
+import Testing
 
 @Suite("Lexer.tokenize")
 struct LexerTokenizeTests {
@@ -40,44 +40,50 @@ struct LexerTokenizeTests {
     @Test func simpleDeclaration() {
         let result = tokenize("let x = 42")
         let kinds = result.lexemes.map(\.kind)
-        #expect(kinds == [
-            .keyword(.let),
-            .identifier,
-            .equal,
-            .integerLiteral,
-            .endOfFile
-        ])
+        #expect(
+            kinds == [
+                .keyword(.let),
+                .identifier,
+                .equal,
+                .integerLiteral,
+                .endOfFile,
+            ]
+        )
         #expect(result.diagnostics.isEmpty)
     }
 
     @Test func structDefinition() {
         let result = tokenize("struct Foo {}")
         let kinds = result.lexemes.map(\.kind)
-        #expect(kinds == [
-            .keyword(.struct),
-            .identifier,
-            .leftBrace,
-            .rightBrace,
-            .endOfFile
-        ])
+        #expect(
+            kinds == [
+                .keyword(.struct),
+                .identifier,
+                .leftBrace,
+                .rightBrace,
+                .endOfFile,
+            ]
+        )
     }
 
     @Test func functionWithArrow() {
         let result = tokenize("func f() -> Int { return 0 }")
         let kinds = result.lexemes.map(\.kind)
-        #expect(kinds == [
-            .keyword(.func),
-            .identifier,
-            .leftParen,
-            .rightParen,
-            .arrow,
-            .identifier, // "Int"
-            .leftBrace,
-            .keyword(.return),
-            .integerLiteral,
-            .rightBrace,
-            .endOfFile
-        ])
+        #expect(
+            kinds == [
+                .keyword(.func),
+                .identifier,
+                .leftParen,
+                .rightParen,
+                .arrow,
+                .identifier,  // "Int"
+                .leftBrace,
+                .keyword(.return),
+                .integerLiteral,
+                .rightBrace,
+                .endOfFile,
+            ]
+        )
     }
 
     @Test func diagnosticsPresent() {
