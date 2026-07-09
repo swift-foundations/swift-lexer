@@ -12,8 +12,9 @@
 import Lexer
 import Testing
 
-@Suite("Lexer.tokenize")
-struct LexerTokenizeTests {
+extension Lexer {
+    @Suite("Lexer.tokenize")
+    struct Test {
 
     // MARK: - Helpers
 
@@ -96,5 +97,6 @@ struct LexerTokenizeTests {
         // Lexer.Tokenized is Sendable — this compiles without warnings.
         let _: any Sendable = result
         #expect(result.lexemes.count == 5)
+    }
     }
 }
