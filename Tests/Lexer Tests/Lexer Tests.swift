@@ -30,14 +30,14 @@ struct LexerTokenizeTests {
 
     // MARK: - Round-Trip
 
-    @Test func emptySource() {
+    @Test func `Empty Source`() {
         let result = tokenize("")
         #expect(result.lexemes.count == 1)
         #expect(result.lexemes.last?.kind == .endOfFile)
         #expect(result.diagnostics.isEmpty)
     }
 
-    @Test func simpleDeclaration() {
+    @Test func `Simple Declaration`() {
         let result = tokenize("let x = 42")
         let kinds = result.lexemes.map(\.kind)
         #expect(
@@ -52,7 +52,7 @@ struct LexerTokenizeTests {
         #expect(result.diagnostics.isEmpty)
     }
 
-    @Test func structDefinition() {
+    @Test func `Struct Definition`() {
         let result = tokenize("struct Foo {}")
         let kinds = result.lexemes.map(\.kind)
         #expect(
@@ -66,7 +66,7 @@ struct LexerTokenizeTests {
         )
     }
 
-    @Test func functionWithArrow() {
+    @Test func `Function With Arrow`() {
         let result = tokenize("func f() -> Int { return 0 }")
         let kinds = result.lexemes.map(\.kind)
         #expect(
@@ -86,12 +86,12 @@ struct LexerTokenizeTests {
         )
     }
 
-    @Test func diagnosticsPresent() {
+    @Test func `Diagnostics Present`() {
         let result = tokenize("/* unterminated")
         #expect(result.diagnostics.count == 1)
     }
 
-    @Test func resultIsSendable() {
+    @Test func `Result Is Sendable`() {
         let result = tokenize("let x = 1")
         // Lexer.Tokenized is Sendable — this compiles without warnings.
         let _: any Sendable = result
