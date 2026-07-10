@@ -16,87 +16,87 @@ extension Lexer {
     @Suite("Lexer.tokenize")
     struct Test {
 
-    // MARK: - Helpers
+        // MARK: - Helpers
 
-    private func tokenize(_ string: String) -> Lexer.Tokenized {
-        let bytes: [Byte] = Array(string.utf8).map(Byte.init)
-        return bytes.withUnsafeBufferPointer { buffer in
-            let span = unsafe Span(
-                _unsafeStart: buffer.baseAddress!,
-                count: buffer.count
-            )
-            return Lexer.tokenize(span)
+        private func tokenize(_ string: String) -> Lexer.Tokenized {
+            let bytes: [Byte] = Array(string.utf8).map(Byte.init)
+            return bytes.withUnsafeBufferPointer { buffer in
+                let span = unsafe Span(
+                    _unsafeStart: buffer.baseAddress!,
+                    count: buffer.count
+                )
+                return Lexer.tokenize(span)
+            }
         }
-    }
 
-    // MARK: - Round-Trip
+        // MARK: - Round-Trip
 
-    @Test func `Empty Source`() {
-        let result = tokenize("")
-        #expect(result.lexemes.count == 1)
-        #expect(result.lexemes.last?.kind == .endOfFile)
-        #expect(result.diagnostics.isEmpty)
-    }
+        @Test func `Empty Source`() {
+            let result = tokenize("")
+            #expect(result.lexemes.count == 1)
+            #expect(result.lexemes.last?.kind == .endOfFile)
+            #expect(result.diagnostics.isEmpty)
+        }
 
-    @Test func `Simple Declaration`() {
-        let result = tokenize("let x = 42")
-        let kinds = result.lexemes.map(\.kind)
-        #expect(
-            kinds == [
-                .keyword(.let),
-                .identifier,
-                .equal,
-                .integerLiteral,
-                .endOfFile,
-            ]
-        )
-        #expect(result.diagnostics.isEmpty)
-    }
+        @Test func `Simple Declaration`() {
+            let result = tokenize("let x = 42")
+            let kinds = result.lexemes.map(\.kind)
+            #expect(
+                kinds == [
+                    .keyword(.let),
+                    .identifier,
+                    .equal,
+                    .integerLiteral,
+                    .endOfFile,
+                ]
+            )
+            #expect(result.diagnostics.isEmpty)
+        }
 
-    @Test func `Struct Definition`() {
-        let result = tokenize("struct Foo {}")
-        let kinds = result.lexemes.map(\.kind)
-        #expect(
-            kinds == [
-                .keyword(.struct),
-                .identifier,
-                .leftBrace,
-                .rightBrace,
-                .endOfFile,
-            ]
-        )
-    }
+        @Test func `Struct Definition`() {
+            let result = tokenize("struct Foo {}")
+            let kinds = result.lexemes.map(\.kind)
+            #expect(
+                kinds == [
+                    .keyword(.struct),
+                    .identifier,
+                    .leftBrace,
+                    .rightBrace,
+                    .endOfFile,
+                ]
+            )
+        }
 
-    @Test func `Function With Arrow`() {
-        let result = tokenize("func f() -> Int { return 0 }")
-        let kinds = result.lexemes.map(\.kind)
-        #expect(
-            kinds == [
-                .keyword(.func),
-                .identifier,
-                .leftParen,
-                .rightParen,
-                .arrow,
-                .identifier,  // "Int"
-                .leftBrace,
-                .keyword(.return),
-                .integerLiteral,
-                .rightBrace,
-                .endOfFile,
-            ]
-        )
-    }
+        @Test func `Function With Arrow`() {
+            let result = tokenize("func f() -> Int { return 0 }")
+            let kinds = result.lexemes.map(\.kind)
+            #expect(
+                kinds == [
+                    .keyword(.func),
+                    .identifier,
+                    .leftParen,
+                    .rightParen,
+                    .arrow,
+                    .identifier,  // "Int"
+                    .leftBrace,
+                    .keyword(.return),
+                    .integerLiteral,
+                    .rightBrace,
+                    .endOfFile,
+                ]
+            )
+        }
 
-    @Test func `Diagnostics Present`() {
-        let result = tokenize("/* unterminated")
-        #expect(result.diagnostics.count == 1)
-    }
+        @Test func `Diagnostics Present`() {
+            let result = tokenize("/* unterminated")
+            #expect(result.diagnostics.count == 1)
+        }
 
-    @Test func `Result Is Sendable`() {
-        let result = tokenize("let x = 1")
-        // Lexer.Tokenized is Sendable — this compiles without warnings.
-        let _: any Sendable = result
-        #expect(result.lexemes.count == 5)
-    }
+        @Test func `Result Is Sendable`() {
+            let result = tokenize("let x = 1")
+            // Lexer.Tokenized is Sendable — this compiles without warnings.
+            let _: any Sendable = result
+            #expect(result.lexemes.count == 5)
+        }
     }
 }
