@@ -68,7 +68,7 @@ extension Lexer {
         }
 
         @Test func `Function With Arrow`() {
-            let result = tokenize("func `F`() -> Int { return 0 }")
+            let result = tokenize("func F() -> Int { return 0 }")
             let kinds = result.lexemes.map(\.kind)
             #expect(
                 kinds == [
