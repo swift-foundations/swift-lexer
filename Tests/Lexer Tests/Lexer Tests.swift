@@ -1,22 +1,9 @@
-// ===----------------------------------------------------------------------===//
-//
-// This source file is part of the swift-lexer open source project
-//
-// Copyright (c) 2025 Coen ten Thije Boonkkamp and the swift-lexer project authors
-// Licensed under Apache License v2.0
-//
-// See LICENSE for license information
-//
-// ===----------------------------------------------------------------------===//
-
 import Lexer
 import Testing
 
 extension Lexer {
     @Suite
     struct Test {
-
-        // MARK: - Helpers
 
         private func tokenize(_ string: String) -> Lexer.Tokenized {
             let bytes: [Byte] = Array(string.utf8).map(Byte.init)
@@ -28,8 +15,6 @@ extension Lexer {
                 return Lexer.tokenize(span)
             }
         }
-
-        // MARK: - Round-Trip
 
         @Test func `Empty Source`() {
             let result = tokenize("")
@@ -77,7 +62,7 @@ extension Lexer {
                     .leftParen,
                     .rightParen,
                     .arrow,
-                    .identifier,  // "Int"
+                    .identifier,
                     .leftBrace,
                     .keyword(.return),
                     .integerLiteral,
@@ -94,7 +79,7 @@ extension Lexer {
 
         @Test func `Result Is Sendable`() {
             let result = tokenize("let x = 1")
-            // Lexer.Tokenized is Sendable — this compiles without warnings.
+
             let _: any Sendable = result
             #expect(result.lexemes.count == 5)
         }
